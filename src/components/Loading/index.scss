@@ -1,0 +1,11 @@
+.loading-container {
+  @apply flex flex-col items-center justify-center py-4;
+
+  .loading-spinner {
+    @apply text-2xl text-primary mb-2;
+  }
+
+  p {
+    @apply text-sm text-gray-500;
+  }
+}

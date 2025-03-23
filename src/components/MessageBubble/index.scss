@@ -1,0 +1,147 @@
+.message-bubble {
+  @apply flex gap-3 mb-6 last:mb-0;
+
+  .avatar {
+    @apply w-10 h-10 rounded-full flex-shrink-0 overflow-hidden;
+
+    img {
+      @apply w-full h-full object-cover;
+    }
+  }
+
+  .content {
+    @apply px-4 py-3 rounded-2xl max-w-[85%] text-sm leading-6 break-words;
+  }
+
+  // 用户消息样式
+  &.user {
+    @apply flex-row-reverse;
+
+    .content {
+      @apply bg-primary text-white rounded-tr-none;
+    }
+  }
+
+  // AI助手消息样式
+  &.assistant {
+    .content {
+      @apply bg-white text-gray-800 rounded-tl-none;
+
+      // 代码块样式
+      pre {
+        @apply my-2 p-3 bg-gray-100 rounded-lg overflow-x-auto;
+        code {
+          @apply text-sm font-mono text-gray-800;
+        }
+      }
+
+      // 行内代码样式
+      code {
+        @apply px-1.5 py-0.5 bg-gray-100 rounded text-sm font-mono text-gray-800;
+      }
+
+      // 链接样式
+      a {
+        @apply text-primary underline;
+      }
+
+      // 列表样式
+      ul,
+      ol {
+        @apply pl-5 my-2;
+        li {
+          @apply mb-1 last:mb-0;
+        }
+      }
+
+      // 引用样式
+      blockquote {
+        @apply pl-3 border-l-4 border-gray-300 text-gray-600 my-2;
+      }
+
+      // 表格样式
+      table {
+        @apply w-full my-2 border-collapse;
+        th,
+        td {
+          @apply border border-gray-200 px-2 py-1 text-sm;
+        }
+        th {
+          @apply bg-gray-50;
+        }
+      }
+    }
+  }
+
+  // 加载中动画
+  &.loading {
+    .content {
+      @apply relative;
+      &::after {
+        content: "";
+        @apply absolute left-2 bottom-2 w-6 h-1;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.2) 50%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        animation: loading 1.5s infinite;
+      }
+    }
+  }
+
+  // 错误状态
+  &.error {
+    .content {
+      @apply bg-red-50 text-red-600 border border-red-200;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+// 深色模式适配
+[data-theme="dark"] {
+  .message-bubble {
+    &.assistant .content {
+      @apply bg-gray-800 text-gray-100;
+
+      pre {
+        @apply bg-gray-900;
+        code {
+          @apply text-gray-100;
+        }
+      }
+
+      code {
+        @apply bg-gray-900 text-gray-100;
+      }
+
+      blockquote {
+        @apply border-gray-600 text-gray-400;
+      }
+
+      table {
+        th,
+        td {
+          @apply border-gray-700;
+        }
+        th {
+          @apply bg-gray-900;
+        }
+      }
+    }
+
+    &.error .content {
+      @apply bg-red-900/20 text-red-400 border-red-800;
+    }
+  }
+}

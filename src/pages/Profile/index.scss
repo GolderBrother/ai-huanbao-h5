@@ -1,0 +1,115 @@
+.page-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.profile-header {
+  @apply px-5 py-4 bg-white border-b border-gray-100 flex justify-between items-center;
+
+  .profile-title {
+    @apply text-lg font-semibold text-gray-800;
+  }
+
+  .profile-action {
+    @apply w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-700;
+  }
+}
+
+.user-info {
+  @apply bg-white p-6 flex items-center;
+
+  .user-avatar {
+    @apply w-[70px] h-[70px] rounded-full overflow-hidden mr-4 flex-shrink-0;
+
+    img {
+      @apply w-full h-full object-cover;
+    }
+  }
+
+  .user-details {
+    @apply flex-1;
+
+    .user-name {
+      @apply text-lg font-semibold text-gray-800 mb-1;
+    }
+
+    .user-id {
+      @apply text-sm text-gray-500 mb-2;
+    }
+
+    .user-level {
+      @apply inline-block px-2 py-0.5 rounded-full text-xs text-primary bg-green-50;
+    }
+  }
+
+  .user-edit {
+    @apply text-gray-400 text-lg;
+  }
+}
+
+.vip-card {
+  @apply mx-4 my-3 p-4 rounded-xl bg-gradient-to-r from-[#00c292] to-[#00a278] text-white;
+
+  .vip-header {
+    @apply flex justify-between items-center mb-4;
+
+    .vip-title {
+      @apply flex items-center;
+
+      .vip-icon {
+        @apply text-xl text-yellow-400 mr-2;
+      }
+
+      .vip-name {
+        @apply text-base font-medium;
+      }
+    }
+
+    .vip-btn {
+      @apply px-3 py-1 rounded-full bg-white/20 text-xs;
+    }
+  }
+
+  .vip-benefits {
+    @apply flex justify-between;
+
+    .vip-benefit {
+      @apply text-center text-xs opacity-90;
+
+      .vip-benefit-icon {
+        @apply text-2xl mb-1;
+      }
+    }
+  }
+}
+
+.menu-section {
+  @apply mx-4 my-3 rounded-xl bg-white overflow-hidden;
+
+  .menu-item {
+    @apply flex items-center px-4 py-4 border-b border-gray-100 last:border-none;
+
+    .menu-icon {
+      @apply w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-base mr-4;
+    }
+
+    .menu-title {
+      @apply flex-1 text-base text-gray-700;
+    }
+
+    .menu-badge {
+      @apply px-1.5 py-0.5 rounded-full bg-red-500 text-white text-xs mr-2;
+    }
+
+    .menu-arrow {
+      @apply text-gray-400;
+    }
+  }
+}
+
+.logout-btn {
+  @apply mx-4 my-3 p-4 rounded-xl bg-white text-center text-red-500 text-base font-medium;
+}
+
+.app-version {
+  @apply text-center text-xs text-gray-400 mb-6;
+} 

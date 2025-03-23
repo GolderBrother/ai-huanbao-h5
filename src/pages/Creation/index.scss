@@ -1,0 +1,116 @@
+.page-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.page-header {
+  @apply px-4 py-3 bg-white sticky top-0 z-10 text-center;
+
+  .page-title {
+    @apply text-lg font-medium text-gray-800;
+  }
+}
+
+.menu-tabs {
+  @apply flex px-4 bg-white border-b border-gray-100 sticky top-[47px] z-10;
+
+  .menu-tab {
+    @apply py-3 px-4 text-base text-gray-600 relative cursor-pointer;
+
+    &.active {
+      @apply text-gray-800 font-medium;
+
+      &::after {
+        content: '';
+        @apply absolute bottom-0 left-1/2 w-5 h-0.5 bg-gray-800 rounded transform -translate-x-1/2;
+      }
+    }
+  }
+}
+
+.tab-content {
+  @apply pb-20;
+
+  .content-section {
+    @apply hidden;
+
+    &.active {
+      @apply block;
+    }
+  }
+}
+
+.grid-container {
+  @apply grid grid-cols-2 gap-5 p-4;
+
+  .grid-item {
+    .item-card {
+      @apply rounded-xl overflow-hidden bg-white shadow-sm;
+
+      .item-image {
+        @apply relative aspect-square rounded-t-xl overflow-hidden;
+
+        .image-title {
+          @apply absolute bottom-8 left-2.5 text-white text-sm font-medium;
+        }
+
+        .overlay {
+          @apply absolute bottom-2.5 right-2.5 bg-black/60 text-white text-sm px-3 py-1.5 rounded-full;
+        }
+      }
+
+      .item-info {
+        @apply flex items-center p-2 text-xs text-gray-500;
+
+        .creator-avatar {
+          @apply w-4.5 h-4.5 rounded-full bg-gray-100 flex items-center justify-center text-[10px] mr-1.5;
+        }
+
+        .creator-name {
+          @apply mr-1.5;
+        }
+
+        .usage-count {
+          @apply ml-auto;
+        }
+      }
+    }
+  }
+}
+
+.writing-list {
+  .writing-item {
+    @apply border-b border-gray-100 p-4;
+
+    .writing-title {
+      @apply text-base font-medium text-gray-800 mb-2;
+    }
+
+    .writing-desc {
+      @apply text-sm text-gray-500 mb-2 line-clamp-2;
+    }
+
+    .item-info {
+      @apply flex items-center text-xs text-gray-400;
+
+      .creator-avatar {
+        @apply w-4.5 h-4.5 rounded-full bg-gray-100 flex items-center justify-center text-[10px] mr-1.5;
+      }
+
+      .creator-name {
+        @apply mr-1.5;
+      }
+
+      .usage-count {
+        @apply ml-auto;
+      }
+    }
+  }
+}
+
+.create-button {
+  @apply fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-white text-[#ff6b6b] py-3 px-8 rounded-full text-base font-medium shadow-lg flex items-center;
+
+  i {
+    @apply mr-2 text-[#ff6b6b];
+  }
+} 

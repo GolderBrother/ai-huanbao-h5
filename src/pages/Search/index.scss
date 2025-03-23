@@ -1,0 +1,124 @@
+.page-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.search-header {
+  @apply p-4 bg-white border-b border-gray-100;
+
+  .search-input-container {
+    @apply flex items-center bg-gray-100 rounded-lg px-4;
+
+    .search-icon {
+      @apply text-gray-400 text-base mr-3;
+    }
+
+    .search-input {
+      @apply flex-1 py-3 bg-transparent text-base outline-none;
+    }
+
+    .voice-icon {
+      @apply text-primary text-lg ml-3;
+    }
+  }
+}
+
+.search-tabs {
+  @apply flex bg-white overflow-x-auto whitespace-nowrap scrollbar-hide sticky top-0 z-10;
+
+  .search-tab {
+    @apply px-4 py-3 text-sm text-gray-600 relative cursor-pointer;
+
+    &.active {
+      @apply text-primary font-medium;
+
+      &::after {
+        content: '';
+        @apply absolute bottom-0 left-4 right-4 h-0.5 bg-primary rounded-t;
+      }
+    }
+  }
+}
+
+.search-content {
+  @apply p-4 pb-20;
+}
+
+.hot-searches {
+  @apply mb-6;
+
+  .hot-search-title {
+    @apply text-base font-medium text-gray-800 mb-4;
+  }
+
+  .hot-search-list {
+    @apply flex flex-wrap gap-2;
+
+    .hot-search-item {
+      @apply bg-white rounded-full px-4 py-2 text-sm text-gray-700;
+
+      .hot-search-rank {
+        @apply text-primary font-medium mr-1.5;
+      }
+    }
+  }
+}
+
+.search-results {
+  .search-result {
+    @apply bg-white rounded-xl mb-4 overflow-hidden;
+
+    .result-header {
+      @apply flex items-center p-4 border-b border-gray-100;
+
+      .result-source-icon {
+        @apply w-6 h-6 rounded-lg bg-primary flex items-center justify-center text-white text-xs mr-2;
+      }
+
+      .result-source {
+        @apply text-sm font-medium text-gray-800;
+      }
+
+      .result-time {
+        @apply text-xs text-gray-400 ml-auto;
+      }
+    }
+
+    .result-content {
+      @apply p-4;
+
+      .result-title {
+        @apply text-base font-medium text-gray-800 mb-2;
+      }
+
+      .result-desc {
+        @apply text-sm text-gray-500 mb-3 line-clamp-2;
+      }
+
+      .result-image {
+        @apply w-full h-[180px] rounded-lg object-cover mb-3;
+      }
+
+      .result-actions {
+        @apply flex justify-between border-t border-gray-100 pt-3;
+
+        .result-action {
+          @apply flex items-center text-xs text-gray-400;
+
+          i {
+            @apply mr-1;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 隐藏滚动条但保持功能
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+} 

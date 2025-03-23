@@ -1,0 +1,15 @@
+.status-bar {
+  @apply flex justify-between items-center px-4 py-2 bg-white;
+
+  &-left {
+    .status-bar-time {
+      @apply text-sm;
+    }
+  }
+
+  &-right {
+    i {
+      @apply ml-2 text-sm;
+    }
+  }
+} 
