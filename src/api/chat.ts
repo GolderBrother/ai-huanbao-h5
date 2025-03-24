@@ -7,7 +7,7 @@ export const sendChatMessage = async (
   model: string,
   onProgress?: (text: string) => void
 ) => {
-  const config = API_CONFIG[model.toUpperCase()]
+  const config = API_CONFIG[model.toUpperCase()] || {}
   const response = await fetch(config.API_URL, {
     method: 'POST',
     headers: {

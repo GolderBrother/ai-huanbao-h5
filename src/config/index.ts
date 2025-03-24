@@ -23,7 +23,7 @@ export const API_CONFIG = {
   // DeepSeek API配置
   DEEPSEEK: {
     API_URL: "https://api.deepseek.com/v1/chat/completions",
-    API_KEY: "sk-2b8d677b18634e74953af0695acf6459", // 在此填入您的DeepSeek API密钥
+    API_KEY: "", // 在此填入您的DeepSeek API密钥
     MODEL: "deepseek-chat",
     TEMPERATURE: 0.7,
     MAX_TOKENS: 2000,
@@ -34,7 +34,7 @@ export const API_CONFIG = {
   // 腾讯云Hunyuan API配置
   HUNYUAN: {
     API_URL: "https://api.hunyuan.cloud.tencent.com/v1/chat/completions",
-    API_KEY: "sk-2kFoSIRsSXeUlAHxxdkzjM6pgsytvwS1dId20bvN7EwcKpUK", // 在此填入您的腾讯云API密钥
+    API_KEY: "", // 在此填入您的腾讯云API密钥
     MODEL: "hunyuan-turbo",
     TEMPERATURE: 0.7,
     MAX_TOKENS: 2000,
@@ -46,7 +46,7 @@ export const API_CONFIG = {
   ALIYUN_DEEPSEEK: {
     API_URL:
       "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation",
-    API_KEY: "sk-b9d70ec291e740e49381d5ada18dcd33", // 在此填入您的阿里云API密钥
+    API_KEY: "", // 在此填入您的阿里云API密钥
     MODEL: "deepseek-r1",
     TEMPERATURE: 0.7,
     MAX_TOKENS: 2000,
@@ -58,7 +58,7 @@ export const API_CONFIG = {
   QWEN: {
     API_URL:
       "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-    API_KEY: "sk-b9d70ec291e740e49381d5ada18dcd33", // 在此填入您的通义千问API密钥
+    API_KEY: "", // 在此填入您的通义千问API密钥
     MODEL: "qwen2.5-7b-instruct-1m", // 更新为正确的模型名称
     TEMPERATURE: 0.7,
     MAX_TOKENS: 2000,
@@ -70,12 +70,12 @@ export const API_CONFIG = {
   ALIYUN_OSS: {
     REGION: "oss-cn-hangzhou", // OSS地域节点
     BUCKET: "yuanbao-demo",
-    ACCESS_KEY_ID: "LTAI5t6KD3L9v3gAvo6MuQqr",
-    ACCESS_KEY_SECRET: "5G0XvhdozB3wlfiILQvkNsyxYQlazf",
+    ACCESS_KEY_ID: "",
+    ACCESS_KEY_SECRET: "",
     ENDPOINT: "https://oss-cn-hangzhou.aliyuncs.com", // OSS访问域名
   },
   QWEN_VL: {
-    API_KEY: "sk-b9d70ec291e740e49381d5ada18dcd33", // 替换为您的API密钥
+    API_KEY: "", // 替换为您的API密钥
     API_URL:
       "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
     MODEL: "qwen-vl-max", // 使用最新的通义千问VL模型
