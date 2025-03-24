@@ -25,6 +25,10 @@ export const useChatStore = defineStore('chat', () => {
     currentModel.value = model
   }
 
+  function updateMessage(index: number, message: ChatMessage) {
+    messages.value[index] = message
+  }
+
   return {
     messages,
     currentModel,
@@ -32,6 +36,7 @@ export const useChatStore = defineStore('chat', () => {
     addMessage,
     updateLastMessage,
     setStreaming,
-    setCurrentModel
+    setCurrentModel,
+    updateMessage
   }
 })

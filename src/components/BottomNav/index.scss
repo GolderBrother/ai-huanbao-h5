@@ -1,20 +1,40 @@
 .bottom-nav {
-  @apply fixed bottom-0 left-0 right-0 h-[60px] bg-white flex items-center justify-around border-t border-gray-200;
+  @apply fixed bottom-0 left-0 right-0 h-[83px] bg-white border-t border-gray-100 flex justify-around items-center pb-5 z-20;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
 
   .nav-item {
-    @apply flex flex-col items-center justify-center cursor-pointer;
+    @apply flex flex-col items-center text-gray-400 no-underline relative py-2 w-[60px];
+    transition: all 0.3s ease;
+
+    &.active {
+      @apply text-primary;
+
+      &::after {
+        content: '';
+        @apply absolute bottom-0 left-1/2 w-3 h-[3px] bg-primary rounded-[6px];
+        transform: translateX(-50%);
+      }
+
+      i {
+        transform: translateY(-2px);
+      }
+    }
 
     i {
-      @apply text-lg mb-1 text-gray-500;
+      @apply text-[22px] mb-1 relative;
+      transition: transform 0.2s ease;
     }
 
     span {
-      @apply text-xs text-gray-500;
+      @apply text-xs font-medium;
+      transition: opacity 0.3s ease;
     }
 
-    &.active {
-      i, span {
-        @apply text-primary;
+    &:hover {
+      @apply text-primary;
+
+      i {
+        transform: translateY(-2px);
       }
     }
   }

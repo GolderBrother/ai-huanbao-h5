@@ -36,10 +36,19 @@ export const sendChatMessage = async (
     
     for (const line of lines) {
       if (line.startsWith('data: ')) {
-        const data = JSON.parse(line.slice(6))
-        if (data.choices?.[0]?.delta?.content) {
-          accumulatedText += data.choices[0].delta.content
-          onProgress?.(accumulatedText)
+        const jsonStr = line.slice(6).trim()
+        // 跳过 [DONE] 标记
+        if (jsonStr === '[DONE]') continue
+        
+        try {
+          const data = JSON.parse(jsonStr)
+          if (data.choices?.[0]?.delta?.content) {
+            accumulatedText += data.choices[0].delta.content
+            onProgress?.(accumulatedText)
+          }
+        } catch (e) {
+          console.warn('解析响应数据失败:', e)
+          continue
         }
       }
     }

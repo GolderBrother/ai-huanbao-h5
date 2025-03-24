@@ -1,7 +1,6 @@
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { sendChatMessage } from '@/api/chat'
-import MarkdownIt from 'markdown-it'
 import './index.scss'
 
 export default defineComponent({
@@ -19,16 +18,6 @@ export default defineComponent({
   setup(props) {
     const chatStore = useChatStore()
     const isSpeaking = ref(false)
-    const md = new MarkdownIt({
-      html: true,
-      breaks: true,
-      linkify: true,
-      typographer: true,
-      highlight: function (str, lang) {
-        // 这里可以集成代码高亮，比如使用 highlight.js 或 prism
-        return `<pre class="language-${lang}"><code>${str}</code></pre>`
-      }
-    })
 
     // 修改重新生成回答的逻辑
     const handleRegenerate = async () => {
@@ -105,48 +94,31 @@ export default defineComponent({
       window.speechSynthesis.speak(utterance)
     }
 
-    // 渲染 Markdown 内容
-    const renderContent = () => {
-      if (props.message.role === 'assistant') {
-        return <div 
-          class="markdown-body text-left" 
-          innerHTML={md.render(props.message.content)}
-        />
-      }
-      return props.message.content
-    }
-
     return () => (
-      <div class={`message-bubble ${props.message.role}`}>
-        <div class="avatar">
-          <img 
-            src={props.message.role === 'user' ? '/avatars/user.png' : '/avatars/ai.png'} 
-            alt={props.message.role}
-          />
+      <div class={`message-wrapper ${props.message.role === 'user' ? 'message-user' : 'message-ai'}`}>
+        <div class="message-content">
+          {props.message.content}
         </div>
-        <div class="content">
-          {renderContent()}
-          {props.message.role === 'assistant' && (
-            <div class="message-actions">
-              <button 
-                class={`action-btn ${chatStore.isStreaming ? 'disabled' : ''}`}
-                onClick={handleRegenerate}
-                disabled={chatStore.isStreaming}
-              >
-                <i class={`fas ${chatStore.isStreaming ? 'fa-spinner fa-spin' : 'fa-rotate-right'}`}></i>
-              </button>
-              <button class="action-btn" onClick={handleCopy}>
-                <i class="fas fa-copy"></i>
-              </button>
-              <button 
-                class={`action-btn ${isSpeaking.value ? 'active' : ''}`} 
-                onClick={handleSpeak}
-              >
-                <i class={`fas ${isSpeaking.value ? 'fa-volume-mute' : 'fa-volume-up'}`}></i>
-              </button>
-            </div>
-          )}
-        </div>
+        {props.message.role === 'assistant' && (
+          <div class="message-actions">
+            <button 
+              class={`action-btn ${chatStore.isStreaming ? 'disabled' : ''}`}
+              onClick={handleRegenerate}
+              disabled={chatStore.isStreaming}
+            >
+              <i class={`fas ${chatStore.isStreaming ? 'fa-spinner fa-spin' : 'fa-rotate-right'}`}></i>
+            </button>
+            <button class="action-btn" onClick={handleCopy}>
+              <i class="fas fa-copy"></i>
+            </button>
+            <button 
+              class={`action-btn ${isSpeaking.value ? 'active' : ''}`} 
+              onClick={handleSpeak}
+            >
+              <i class={`fas ${isSpeaking.value ? 'fa-volume-mute' : 'fa-volume-up'}`}></i>
+            </button>
+          </div>
+        )}
       </div>
     )
   }

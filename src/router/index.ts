@@ -36,6 +36,11 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/see-for-me',
+    component: () => import('@/pages/SeeForMe'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: () => import('@/pages/Exception/404')
   }

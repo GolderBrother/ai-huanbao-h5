@@ -11,10 +11,9 @@ export interface UserInfo {
 
 // 聊天相关
 export interface ChatMessage {
-  role: "user" | "assistant";
-  content: string;
-  timestamp?: number;
-  status?: "sending" | "success" | "error";
+  role: 'user' | 'assistant'
+  content: string
+  timestamp?: number
 }
 
 // 创作相关
@@ -78,3 +77,5 @@ export interface ApiResponse<T> {
   message: string;
   data: T;
 }
+
+export type AIModel = 'Hunyuan' | 'Deepseek' | 'Qwen'

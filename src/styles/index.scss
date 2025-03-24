@@ -1,5 +1,6 @@
 // 移除 @import './index.css';，改为在 main.ts 中导入
-@import './tailwind.css';
+@import "./tailwind.css";
+@import "./style.scss";
 :root {
   --primary-color: #00c48c;
   --primary-color-rgb: 0, 196, 140;
@@ -31,6 +32,12 @@ html {
 }
 
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  padding: 0;
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
@@ -45,8 +52,10 @@ body {
 }
 
 .page-container {
+  width: 390px;
   min-height: 100vh;
   padding-bottom: 60px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 44px;
+  overflow: hidden;
 }
-
-// ... 其他样式保持不变，但移除 @apply 指令，改用普通 CSS
