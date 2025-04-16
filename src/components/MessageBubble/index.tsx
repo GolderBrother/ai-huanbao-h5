@@ -2,6 +2,8 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { sendChatMessage } from '@/api/chat'
 import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css' // 选择你喜欢的样式
 import './index.scss'
 
 export default defineComponent({
@@ -19,14 +21,22 @@ export default defineComponent({
   setup(props) {
     const chatStore = useChatStore()
     const isSpeaking = ref(false)
+
     const md = new MarkdownIt({
       html: true,
       breaks: true,
       linkify: true,
       typographer: true,
       highlight: function (str, lang) {
-        // 这里可以集成代码高亮，比如使用 highlight.js 或 prism
-        return `<pre class="language-${lang}"><code>${str}</code></pre>`
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(str, { 
+              language: lang,
+              ignoreIllegals: true 
+            }).value
+          } catch (__) {}
+        }
+        return '' // 使用默认处理
       }
     })
 
