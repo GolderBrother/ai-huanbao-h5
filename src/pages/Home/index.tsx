@@ -9,6 +9,8 @@ import type { AIModel } from '@/types'
 import './index.scss'
 import { useRouter } from 'vue-router'
 import type { SpeechRecognition, SpeechRecognitionErrorEvent, SpeechRecognitionEvent } from '@/types/speech'
+import { TOOL_OPTIONS } from '@/config'
+import { TOOL_OPTIONS_CONFIG } from '@/constants'
 
 export default defineComponent({
   name: 'Home',
@@ -21,7 +23,8 @@ export default defineComponent({
     const fileInputRef = ref<HTMLInputElement>()
     const showImagePreview = ref(false)
     const selectedImage = ref('')
-    const activeToolOption = ref('')
+    // 修改 activeToolOption 的类型
+    const activeToolOption = ref<string[]>([]);
     const recognition = ref<SpeechRecognition | null>(null)
     const isVoiceListening = ref(false)
 
@@ -71,7 +74,7 @@ export default defineComponent({
     const handleSend = async () => {
       if ((!inputMessage.value.trim() && !selectedImage.value) || chatStore.isStreaming) return
 
-      const content = selectedImage.value 
+      const content = selectedImage.value
         ? `[图片]\n${inputMessage.value}`
         : inputMessage.value
 
@@ -110,21 +113,39 @@ export default defineComponent({
     }
 
     const handleToolOptionClick = (toolName: string) => {
-      activeToolOption.value = toolName
+      // 这三个工具可以同时高亮
+      const multiHighlightTools = [
+        TOOL_OPTIONS.DEEP_THINKING,
+        TOOL_OPTIONS.WEB_SEARCH,
+        TOOL_OPTIONS.TRUSTED_SEARCH
+      ];
+      
+      if (multiHighlightTools.includes(toolName)) {
+        // 切换高亮状态
+        const index = activeToolOption.value.indexOf(toolName);
+        if (index === -1) {
+          activeToolOption.value.push(toolName);
+        } else {
+          activeToolOption.value.splice(index, 1);
+        }
+      } else {
+        // 其他工具点击后清空高亮
+        activeToolOption.value = [];
+      }
 
       const previousModel = chatStore.currentModel
       let newModel: AIModel | string = previousModel
 
-      if (toolName === 'T1·深度思考') {
-        newModel = 'T1·深度思考'
-      } else if (toolName === '联网搜索') {
-        newModel = '联网搜索'
-      } else if (toolName === '可信搜索') {
-        newModel = '可信搜索'
-      } else if (toolName === '拍照答题') {
+      if (toolName === TOOL_OPTIONS.DEEP_THINKING) {
+        newModel = TOOL_OPTIONS.DEEP_THINKING
+      } else if (toolName === TOOL_OPTIONS.WEB_SEARCH) {
+        newModel = TOOL_OPTIONS.WEB_SEARCH
+      } else if (toolName === TOOL_OPTIONS.TRUSTED_SEARCH) {
+        newModel = TOOL_OPTIONS.TRUSTED_SEARCH
+      } else if (toolName === TOOL_OPTIONS.PHOTO_ANSWER) {
         fileInputRef.value?.click()
         return
-      } else if (toolName === '帮我看看') {
+      } else if (toolName === TOOL_OPTIONS.SEE_FOR_ME) {
         router.push('/see-for-me')
         return
       }
@@ -144,7 +165,7 @@ export default defineComponent({
       if ('webkitSpeechRecognition' in window) {
         recognition.value = new (window as any).webkitSpeechRecognition()
         if (!recognition.value) return
-        
+
         recognition.value.continuous = false
         recognition.value.interimResults = true
         recognition.value.lang = 'zh-CN'
@@ -207,7 +228,7 @@ export default defineComponent({
     })
 
     const voiceButton = (
-      <button 
+      <button
         class={`action-button ${isVoiceListening.value ? 'active' : ''}`}
         onClick={handleVoiceButtonClick}
       >
@@ -218,20 +239,22 @@ export default defineComponent({
     return () => (
       <div class="page-container !w-full">
         <StatusBar />
-        
+
         {/* 头部 */}
         <div class="home-header">
           <div class="home-title">
             元宝
             <div class="model-selector">
-              <select 
+              <select
                 value={chatStore.currentModel}
                 onChange={(e) => handleModelChange(e.target.value as AIModel)}
                 class="home-title-model"
               >
-                <option value="Hunyuan">Hunyuan</option>
-                <option value="Deepseek">Deepseek</option>
-                <option value="Qwen">Qwen</option>
+                {Object.values(AI_MODELS).map((model) => (
+                  <option value={model.value} key={model.value}>
+                    {model.label}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -257,7 +280,7 @@ export default defineComponent({
                 </div>
                 <div class="suggestion-chips">
                   {suggestionQuestions.map((question, index) => (
-                    <div 
+                    <div
                       key={index}
                       class="suggestion-chip"
                       onClick={() => handleSuggestionClick(question)}
@@ -270,9 +293,9 @@ export default defineComponent({
             ) : (
               // 当有消息时只显示消息列表
               chatStore.messages.map((message, index) => (
-                <MessageBubble 
-                  key={index} 
-                  message={message} 
+                <MessageBubble
+                  key={index}
+                  message={message}
                   index={index}
                 />
               ))
@@ -286,11 +309,11 @@ export default defineComponent({
           {showImagePreview.value && (
             <div class="image-preview-area">
               <div class="image-preview-container">
-                <img 
+                <img
                   ref={imagePreviewRef}
-                  class="image-preview" 
-                  src={selectedImage.value} 
-                  alt="预览图片" 
+                  class="image-preview"
+                  src={selectedImage.value}
+                  alt="预览图片"
                 />
                 <div class="delete-image" onClick={deleteImage}>
                   <i class="fas fa-times"></i>
@@ -298,8 +321,8 @@ export default defineComponent({
               </div>
             </div>
           )}
-          
-          <input 
+
+          <input
             type="file"
             ref={fileInputRef}
             accept="image/*"
@@ -310,41 +333,18 @@ export default defineComponent({
 
           <div class="input-container">
             <div class="tools-row">
-              <div 
-                class={`tool-option ${activeToolOption.value === '拍照答题' ? 'active' : ''}`} 
-                onClick={() => handleToolOptionClick('拍照答题')}
-              >
-                <i class="fas fa-camera"></i>
-                <span>拍照答题</span>
-              </div>
-              <div 
-                class={`tool-option ${activeToolOption.value === '帮我看看' ? 'active' : ''}`}
-                onClick={() => handleToolOptionClick('帮我看看')}
-              >
-                <i class="fas fa-eye"></i>
-                <span>帮我看看</span>
-              </div>
-              <div 
-                class={`tool-option brain ${activeToolOption.value === 'T1·深度思考' ? 'active' : ''}`}
-                onClick={() => handleToolOptionClick('T1·深度思考')}
-              >
-                <i class="fas fa-brain"></i>
-                <span>T1·深度思考</span>
-              </div>
-              <div 
-                class={`tool-option ${activeToolOption.value === '联网搜索' ? 'active' : ''}`}
-                onClick={() => handleToolOptionClick('联网搜索')}
-              >
-                <i class="fas fa-globe"></i>
-                <span>联网搜索</span>
-              </div>
-              <div 
-                class={`tool-option ${activeToolOption.value === '可信搜索' ? 'active' : ''}`}
-                onClick={() => handleToolOptionClick('可信搜索')}
-              >
-                <i class="fas fa-shield-alt"></i>
-                <span>可信搜索</span>
-              </div>
+              {TOOL_OPTIONS_CONFIG.map((tool) => (
+                <div
+                  key={tool.key}
+                  class={`tool-option ${tool.className} ${
+                    activeToolOption.value.includes(tool.key) ? 'active' : ''
+                  }`}
+                  onClick={() => handleToolOptionClick(tool.key)}
+                >
+                  <i class={`fas ${tool.icon}`}></i>
+                  <span>{tool.label}</span>
+                </div>
+              ))}
             </div>
 
             <div class="input-row">
@@ -360,7 +360,7 @@ export default defineComponent({
                 }}
               />
               <div class="action-buttons">
-                <button 
+                <button
                   class={`action-button ${chatStore.isStreaming ? 'disabled' : ''}`}
                   onClick={handleSend}
                   disabled={chatStore.isStreaming}

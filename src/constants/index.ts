@@ -1,8 +1,10 @@
+import { TOOL_OPTIONS } from "@/config";
+
 // AI 模型相关
 export const AI_MODELS = {
-  HUNYUAN: "Hunyuan",
-  DEEPSEEK: "Deepseek",
-  QWEN: "Qwen",
+  HUNYUAN: { value: "HUNYUAN", label: "Hunyuan" },
+  DEEPSEEK: { value: "DEEPSEEK", label: "Deepseek" },
+  QWEN: { value: "QWEN", label: "Qwen" },
 } as const;
 
 export const SYSTEM_PROMPTS = {
@@ -61,3 +63,37 @@ export const STORAGE_KEYS = {
   CHAT_HISTORY: "chatHistory",
   SETTINGS: "settings",
 } as const;
+
+// 工具选项配置
+export const TOOL_OPTIONS_CONFIG = [
+  {
+    key: TOOL_OPTIONS.PHOTO_ANSWER,
+    label: '拍照答题',
+    icon: 'fa-camera',
+    className: ''
+  },
+  {
+    key: TOOL_OPTIONS.SEE_FOR_ME,
+    label: '帮我看看',
+    icon: 'fa-eye',
+    className: ''
+  },
+  {
+    key: TOOL_OPTIONS.DEEP_THINKING,
+    label: 'T1·深度思考',
+    icon: 'fa-brain',
+    className: 'brain'
+  },
+  {
+    key: TOOL_OPTIONS.WEB_SEARCH,
+    label: '联网搜索',
+    icon: 'fa-globe',
+    className: ''
+  },
+  {
+    key: TOOL_OPTIONS.TRUSTED_SEARCH,
+    label: '可信搜索',
+    icon: 'fa-shield-alt',
+    className: ''
+  }
+] as const;
