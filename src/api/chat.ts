@@ -1,13 +1,10 @@
-import request from './request'
 import { API_CONFIG } from '@/config'
-import type { ChatMessage } from '@/types'
-
 export const sendChatMessage = async (
   message: string,
   model: string,
   onProgress?: (text: string) => void
 ) => {
-  const config = API_CONFIG[model.toUpperCase()] || {}
+  const config: any = API_CONFIG[model.toUpperCase() as unknown as keyof typeof API_CONFIG] || {}
   const response = await fetch(config.API_URL, {
     method: 'POST',
     headers: {

@@ -87,7 +87,7 @@
   // AI助手消息样式
   &.assistant {
     .content {
-      @apply bg-gray-50 text-gray-800 rounded-tl-none;
+      @apply bg-gray-50 text-gray-800 rounded-tl-none p-0;
 
       .message-actions {
         @apply flex items-center gap-4 mt-2;

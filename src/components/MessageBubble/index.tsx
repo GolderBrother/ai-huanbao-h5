@@ -48,6 +48,7 @@ export default defineComponent({
         // 将当前 AI 消息设置为加载状态
         chatStore.updateMessage(props.index, {
           ...props.message,
+          role: 'assistant',
           content: ''
         })
         
@@ -60,6 +61,7 @@ export default defineComponent({
             (text) => {
               chatStore.updateMessage(props.index, {
                 ...props.message,
+                role: 'user',
                 content: text
               })
             }
@@ -118,12 +120,12 @@ export default defineComponent({
 
     return () => (
       <div class={`message-bubble ${props.message.role}`}>
-        <div class="avatar">
+        {/* <div class="avatar">
           <img 
             src={props.message.role === 'user' ? '/avatars/user.png' : '/avatars/ai.png'} 
             alt={props.message.role}
           />
-        </div>
+        </div> */}
         <div class="content">
           {renderContent()}
           {props.message.role === 'assistant' && (
